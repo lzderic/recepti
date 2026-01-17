@@ -1,36 +1,199 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Recepti
 
-## Getting Started
+Vaš zadatak je izraditi mini aplikaciju “Recepti”.
 
-First, run the development server:
+Napomena: ovo je POC inspiriran Coolinarikom.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+> **📋 About This Project**  
+> A single Next.js codebase that includes UI, API (Route Handlers), and the DB layer (Prisma).
+
+## 📝 Notes
+
+- Recommended: Node.js 20+.
+- PostgreSQL runs via Docker Compose and is exposed on `localhost:5433`.
+- Next.js runs on `http://localhost:3000`.
+
+## 🚧 Proof of Concept (POC)
+
+This is a **proof of concept** (POC). The UI is intentionally “realistic”, and some elements may look clickable/functional, but are deliberately left as **placeholders** until implemented.
+
+### ✅ What works
+
+- Pages:
+  - `/recepti` (recipes list)
+  - `/recepti/:slug` (recipe details)
+  - `/recepti/admin` (minimal admin UI for CRUD testing)
+- API:
+  - `GET /api/recipes`, `GET /api/recipes/:slug`
+  - (via the admin UI) create/update/delete recipes
+- “Fake CDN” route for static images: `GET /cdn/*`
+
+### 🧩 Looks functional, but currently isn’t
+
+- Most sidebar navigation items are **disabled** (greyed out) and exist only for layout/structure.
+- On the recipe details page:
+  - “Dodaj sliku” button (placeholder)
+  - “Napiši komentar” button (placeholder)
+
+---
+
+## 🚀 Install
+
+Install depends on how you want to run the app.
+
+### Option A: everything in Docker (simplest)
+
+From the project root:
+
+If you previously ran this project with a different DB name, recreate the volume (this deletes DB data):
+
+```sh
+docker compose down -v
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Compose project name is set to `recepti` (so containers/volumes are named accordingly). If you had an older stack name, recreate containers:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```sh
+docker compose down -v
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```sh
+docker compose up --build
+```
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## ▶️ Run
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Option B: DB in Docker, app locally
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Start the DB:
 
-## Deploy on Vercel
+```sh
+docker compose up -d db
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+If you previously ran this project with a different DB name, recreate the volume first (this deletes DB data):
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```sh
+docker compose down -v
+docker compose up -d db
+```
+
+2. Install dependencies and set up env:
+
+```sh
+cd frontend
+npm install
+```
+
+Create `frontend/.env.local` and `frontend/.env` (Prisma CLI reads `.env`).
+Tip: start by copying `frontend/.env.example`:
+
+```env
+DATABASE_URL=postgresql://postgres:postgres@localhost:5433/recepti?schema=public
+
+NEXT_PUBLIC_CDN_BASE_URL=/cdn
+CDN_BASE_URL=/cdn
+```
+
+3. Migrations + seed:
+
+```sh
+npm run migrate
+npm run seed
+```
+
+4. Dev server:
+
+```sh
+npm run dev
+```
+
+Windows note: if PowerShell blocks `npm` scripts, use `npm.cmd` instead.
+
+---
+
+## 🧪 Test
+
+Tests live in `frontend/` (Vitest). Run:
+
+```sh
+cd frontend
+npm test
+```
+
+---
+
+## 🛡️ Git Hooks & Husky
+
+This repo uses Husky to run quality checks on every commit.
+
+**What runs before commit:**
+
+- `npm run lint`
+- `npm run format:check` (Prettier)
+- `npm run test`
+
+**Setup:**
+
+```sh
+cd frontend
+npm install
+```
+
+`npm install` runs the `prepare` script and installs the hooks.
+
+If you ever need to skip hooks (e.g. a WIP commit):
+
+```sh
+git commit -m "wip" --no-verify
+```
+
+---
+
+## 🛠️ Code Style
+
+From `frontend/`:
+
+```sh
+npm run lint
+npm run format
+npm run format:check
+```
+
+---
+
+## 💡 Useful URLs
+
+- UI:
+  - `http://localhost:3000/recepti`
+  - `http://localhost:3000/recepti/:slug`
+  - `http://localhost:3000/recepti/admin`
+- API:
+  - `GET http://localhost:3000/api/recipes`
+  - `GET http://localhost:3000/api/recipes/:slug`
+- Fake CDN:
+  - `GET http://localhost:3000/cdn/*`
+
+---
+
+## 📁 Project Structure
+
+```text
+docker-compose.yml
+README.md
+frontend/
+  .husky/                 # Husky hooks (pre-commit)
+  prisma/                 # Prisma schema + migrations + seed
+  public/                 # Static assets (fake CDN content)
+  src/
+    app/                  # Next.js App Router pages + route handlers
+    components/           # UI components
+    lib/                  # Shared libs (cdn/http/formatters/images)
+    services/             # Client/server service layer
+    store/                # Redux store (UI state)
+    test-utils/           # UI test helpers (RTL)
+  vitest.config.ts
+  vitest.setup.ts
+```

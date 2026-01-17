@@ -1,0 +1,36 @@
+name: recepti
+
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: recepti
+    ports:
+      - "5433:5432"
+    volumes:
+      - recepti_db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d recepti"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  web:
+    build:
+      context: ./frontend
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/recepti?schema=public
+      NEXT_PUBLIC_CDN_BASE_URL: /cdn
+      CDN_BASE_URL: /cdn
+    ports:
+      - "3000:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+    command: >-
+      sh -c "npx prisma generate; (npx prisma migrate deploy || npx prisma db push); npx prisma db seed; npm run start"
+
+volumes:
+  recepti_db:

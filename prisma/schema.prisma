@@ -1,0 +1,50 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Difficulty {
+  EASY
+  MEDIUM
+  HARD
+}
+
+enum DishGroup {
+  MAIN
+  DESSERT
+  BREAD
+  APPETIZER
+  SALAD
+  SOUP
+}
+
+enum CookingMethod {
+  BAKE
+  FRY
+  BOIL
+  GRILL
+  NO_COOK
+}
+
+model Recipe {
+  id              String        @id @default(uuid())
+  slug            String        @unique
+  title           String
+  lead            String
+  prepTimeMinutes Int
+  servings        Int
+  difficulty      Difficulty
+  dishGroup       DishGroup
+  cookingMethod   CookingMethod
+  tags            String[]
+  ingredients     Json
+  steps           Json
+  imageCdnPath    String
+  images          Json?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+}

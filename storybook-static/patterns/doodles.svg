@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="560" viewBox="0 0 560 560">
+  <defs>
+    <style>
+      .s { fill: none; stroke: #cbd5e1; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    </style>
+  </defs>
+
+  <!--
+    Original subtle kitchen doodles pattern (inspired by, but not copied from, Coolinarika).
+    Tile is meant to be repeated via CSS background-image.
+  -->
+  <g opacity="0.16">
+    <!-- chef hat -->
+    <path class="s" d="M98 90c0-18 14-32 32-32 9 0 17 3 23 9 5-7 13-11 23-11 16 0 29 13 29 29 14 1 25 13 25 27 0 15-12 27-27 27H113c-15 0-27-12-27-27 0-10 5-18 12-22Z"/>
+    <path class="s" d="M112 147v34c0 8 6 14 14 14h80c8 0 14-6 14-14v-34"/>
+
+    <!-- plate -->
+    <circle class="s" cx="438" cy="118" r="34"/>
+    <circle class="s" cx="438" cy="118" r="14"/>
+
+    <!-- spoon -->
+    <path class="s" d="M70 258c0 12 10 22 22 22s22-10 22-22-10-22-22-22-22 10-22 22Z"/>
+    <path class="s" d="M92 280v54"/>
+
+    <!-- fork -->
+    <path class="s" d="M476 232v72"/>
+    <path class="s" d="M462 232v24"/>
+    <path class="s" d="M470 232v24"/>
+    <path class="s" d="M482 232v24"/>
+    <path class="s" d="M490 232v24"/>
+
+    <!-- rolling pin -->
+    <path class="s" d="M168 254h128"/>
+    <path class="s" d="M158 246h10c6 0 10 4 10 10s-4 10-10 10h-10"/>
+    <path class="s" d="M296 246h10c6 0 10 4 10 10s-4 10-10 10h-10"/>
+
+    <!-- pot -->
+    <rect class="s" x="86" y="414" width="140" height="70" rx="14"/>
+    <path class="s" d="M100 414v-14h112v14"/>
+    <path class="s" d="M70 442h16"/>
+    <path class="s" d="M226 442h16"/>
+    <path class="s" d="M132 400c0-10 8-18 18-18"/>
+    <path class="s" d="M170 400c0-10 8-18 18-18"/>
+
+    <!-- frying pan -->
+    <path class="s" d="M372 402c-20 0-36 16-36 36s16 36 36 36h44c20 0 36-16 36-36s-16-36-36-36h-44Z"/>
+    <path class="s" d="M452 436h38c10 0 18 8 18 18"/>
+
+    <!-- bowl -->
+    <path class="s" d="M354 320c10 40 42 64 84 64s74-24 84-64"/>
+    <path class="s" d="M360 320h168"/>
+
+    <!-- small sprinkles -->
+    <path class="s" d="M322 166l12 12"/>
+    <path class="s" d="M340 150l12 12"/>
+    <path class="s" d="M314 138l10 10"/>
+    <path class="s" d="M262 150l10 10"/>
+    <path class="s" d="M246 174l10 10"/>
+    <path class="s" d="M274 196l12 12"/>
+
+    <!-- carrot -->
+    <path class="s" d="M204 322c18 18 28 44 8 64-20 20-46 10-64-8"/>
+    <path class="s" d="M152 378l-18 18"/>
+    <path class="s" d="M214 314l16-10"/>
+    <path class="s" d="M214 314l-10-16"/>
+    <path class="s" d="M214 314l-18 2"/>
+
+    <!-- cup -->
+    <path class="s" d="M420 178h-62v44c0 14 12 26 26 26h10c14 0 26-12 26-26v-44Z"/>
+    <path class="s" d="M420 188h10c10 0 18 8 18 18s-8 18-18 18h-10"/>
+    <path class="s" d="M366 178c0-12 10-22 22-22"/>
+
+    <!-- leaf -->
+    <path class="s" d="M314 74c-30 0-52 22-52 52 0 18 10 30 28 30 36 0 52-34 52-82Z"/>
+    <path class="s" d="M280 132c10-6 22-18 32-32"/>
+  </g>
+</svg>
