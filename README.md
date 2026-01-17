@@ -37,89 +37,73 @@ This is a **proof of concept** (POC). The UI is intentionally “realistic”, a
 
 ---
 
-## 🚀 Install
+## 🚀 Project Setup (Step-by-Step)
 
-Install depends on how you want to run the app.
+### 1. Start the Database (PostgreSQL via Docker)
 
-### Option A: everything in Docker (simplest)
-
-From the project root:
+```sh
+docker compose up -d db
+```
 
 If you previously ran this project with a different DB name, recreate the volume (this deletes DB data):
 
 ```sh
 docker compose down -v
-```
-
-Compose project name is set to `recepti` (so containers/volumes are named accordingly). If you had an older stack name, recreate containers:
-
-```sh
-docker compose down -v
-```
-
-```sh
-docker compose up --build
-```
-
----
-
-## ▶️ Run
-
-### Option B: DB in Docker, app locally
-
-1. Start the DB:
-
-```sh
 docker compose up -d db
 ```
 
-If you previously ran this project with a different DB name, recreate the volume first (this deletes DB data):
+### 2. Install Dependencies
 
 ```sh
-docker compose down -v
-docker compose up -d db
-```
-
-2. Install dependencies and set up env:
-
-```sh
-cd frontend
 npm install
 ```
 
-Create `frontend/.env.local` and `frontend/.env` (Prisma CLI reads `.env`).
-Tip: start by copying `frontend/.env.example`:
+### 3. Create Environment Files
+
+Create `.env` and `.env.local` in the project root with the following content:
+
+#### .env
 
 ```env
 DATABASE_URL=postgresql://postgres:postgres@localhost:5433/recepti?schema=public
+```
 
+#### .env.local
+
+```env
+# Frontend
+# PostgreSQL (used by Next.js Route Handlers)
+DATABASE_URL=postgresql://postgres:postgres@localhost:5433/recepti?schema=public
+
+# CDN base (optional). If not set, the app will use /cdn/* on same origin.
 NEXT_PUBLIC_CDN_BASE_URL=/cdn
+
+# Assignment-compatible name (server-side). Keep NEXT_PUBLIC_* above for browser usage.
 CDN_BASE_URL=/cdn
 ```
 
-3. Migrations + seed:
+### 4. Run Prisma Migrations and Seed the Database
 
 ```sh
-npm run migrate
+npx prisma migrate deploy
 npm run seed
 ```
 
-4. Dev server:
+### 5. Start the Development Server
 
 ```sh
 npm run dev
 ```
 
-Windows note: if PowerShell blocks `npm` scripts, use `npm.cmd` instead.
+If PowerShell blocks `npm` scripts on Windows, use `npm.cmd` instead.
 
 ---
 
-## 🧪 Test
+## 🧪 Running Tests
 
-Tests live in `frontend/` (Vitest). Run:
+Tests use Vitest. Run:
 
 ```sh
-cd frontend
 npm test
 ```
 
@@ -138,7 +122,6 @@ This repo uses Husky to run quality checks on every commit.
 **Setup:**
 
 ```sh
-cd frontend
 npm install
 ```
 
@@ -153,8 +136,6 @@ git commit -m "wip" --no-verify
 ---
 
 ## 🛠️ Code Style
-
-From `frontend/`:
 
 ```sh
 npm run lint
@@ -183,17 +164,26 @@ npm run format:check
 ```text
 docker-compose.yml
 README.md
-frontend/
-  .husky/                 # Husky hooks (pre-commit)
-  prisma/                 # Prisma schema + migrations + seed
-  public/                 # Static assets (fake CDN content)
-  src/
-    app/                  # Next.js App Router pages + route handlers
-    components/           # UI components
-    lib/                  # Shared libs (cdn/http/formatters/images)
-    services/             # Client/server service layer
-    store/                # Redux store (UI state)
-    test-utils/           # UI test helpers (RTL)
-  vitest.config.ts
-  vitest.setup.ts
+prisma/
+  schema.prisma
+  seed.ts
+  migrations/
+public/
+  cdn/
+  patterns/
+src/
+  app/
+  components/
+  lib/
+  services/
+  store/
+  test-utils/
+  types/
+  styles/
+  shared/
+  stories/
+  __tests__/
+  ...
+vitest.config.ts
+vitest.setup.ts
 ```

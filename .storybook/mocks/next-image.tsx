@@ -16,8 +16,9 @@ const Image = ({ src, alt, width, height, className, fill, ...rest }: NextImageP
   const resolvedWidth = fill ? undefined : width;
   const resolvedHeight = fill ? undefined : height;
 
+  // Note: <img> is used here as a mock for Storybook, not for production. In production, use <Image /> from next/image for optimization.
   return (
-    // eslint-disable-next-line jsx-a11y/alt-text
+    // eslint-disable-next-line @next/next/no-img-element
     <img
       src={src}
       alt={alt}
