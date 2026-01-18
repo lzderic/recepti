@@ -1,64 +1,44 @@
 # Recepti
 
-Vaš zadatak je izraditi mini aplikaciju “Recepti”.
+Recepti is a proof-of-concept application inspired by Coolinarika (https://www.coolinarika.com/).
+The UI is intentionally “realistic”, and some elements may look clickable/functional, but are deliberately left as **placeholders** until implemented.
+The app is designed to look and feel like a full-featured product, demonstrating how easily it could be extended to a full MVP.
+Routes include `/recepti` (recipes list), `/recepti/:slug` (recipe details), and `/recepti/admin` (admin CRUD UI).
+There is a product page, and both search and filtering are fully functional.
 
-Napomena: ovo je POC inspiriran Coolinarikom.
+## Requirements
 
-> **📋 About This Project**  
-> A single Next.js codebase that includes UI, API (Route Handlers), and the DB layer (Prisma).
+To run this application locally, you need:
 
-## 📝 Notes
+- **Docker** (for running the PostgreSQL database via Docker Compose)
+- **Node.js** (version 20 or higher is recommended)
+- **npm** (Node.js package manager)
 
-- Recommended: Node.js 20+.
-- PostgreSQL runs via Docker Compose and is exposed on `localhost:5433`.
-- Next.js runs on `http://localhost:3000`.
+Make sure Docker is running before starting the database. All other dependencies are installed via npm.
 
-## 🚧 Proof of Concept (POC)
+## Storybook
 
-This is a **proof of concept** (POC). The UI is intentionally “realistic”, and some elements may look clickable/functional, but are deliberately left as **placeholders** until implemented.
+Storybook is included for interactive documentation and development of UI components. You can view and test all reusable components in isolation. The static build is generated in the `storybook-static` folder (which is ignored in git).
 
-### ✅ What works
+To run Storybook in development mode:
 
-- Pages:
-  - `/recepti` (recipes list)
-  - `/recepti/:slug` (recipe details)
-  - `/recepti/admin` (minimal admin UI for CRUD testing)
-- API:
-  - `GET /api/recipes`, `GET /api/recipes/:slug`
-  - (via the admin UI) create/update/delete recipes
-- “Fake CDN” route for static images: `GET /cdn/*`
+```sh
+npm run storybook
+```
 
-### 🧩 Looks functional, but currently isn’t
+To build static Storybook files:
 
-- Most sidebar navigation items are **disabled** (greyed out) and exist only for layout/structure.
-- On the recipe details page:
-  - “Dodaj sliku” button (placeholder)
-  - “Napiši komentar” button (placeholder)
+```sh
+npm run storybook:build
+```
+
+The static files will be available in the `storybook-static` directory.
 
 ---
 
 ## 🚀 Project Setup (Step-by-Step)
 
-### 1. Start the Database (PostgreSQL via Docker)
-
-```sh
-docker compose up -d db
-```
-
-If you previously ran this project with a different DB name, recreate the volume (this deletes DB data):
-
-```sh
-docker compose down -v
-docker compose up -d db
-```
-
-### 2. Install Dependencies
-
-```sh
-npm install
-```
-
-### 3. Create Environment Files
+### 1. Create Environment Files
 
 Create `.env` and `.env.local` in the project root with the following content:
 
@@ -82,22 +62,70 @@ NEXT_PUBLIC_CDN_BASE_URL=/cdn
 CDN_BASE_URL=/cdn
 ```
 
-### 4. Run Prisma Migrations and Seed the Database
+## 🏁 Quick Start with Docker Compose
+
+> **Recommended:** For the easiest and most reliable setup, it is strongly recommended to use Docker Compose to run the entire stack (frontend, Storybook, and database) together.
+
+You can start the entire application stack (frontend, Storybook, and database) using Docker Compose. This is the recommended way for a fully functional local environment.
+
+1. Build all services:
+
+```sh
+docker compose build
+```
+
+2. Start all services:
+
+```sh
+docker compose up
+```
+
+This will start:
+
+- The Next.js frontend on `http://localhost:3000`
+- Storybook on `http://localhost:6006`
+- PostgreSQL database on `localhost:5433`
+
+All services will be up and running, ready for development and testing.
+
+## 🚦 Running Without Docker
+
+If you prefer to run the application without Docker, follow these steps:
+
+1. Make sure you have a local PostgreSQL instance running and accessible. You can use the same connection string as in `.env` (see above), or adjust it to match your local setup.
+
+2. Install all dependencies:
+
+```sh
+npm install
+```
+
+3. Run Prisma migrations and seed the database:
 
 ```sh
 npx prisma migrate deploy
 npm run seed
 ```
 
-### 5. Start the Development Server
+4. Start the Next.js development server:
 
 ```sh
 npm run dev
 ```
 
-If PowerShell blocks `npm` scripts on Windows, use `npm.cmd` instead.
+5. (Optional) Start Storybook for component development:
 
----
+```sh
+npm run storybook
+```
+
+You will then have:
+
+- The Next.js frontend on `http://localhost:3000`
+- Storybook on `http://localhost:6006` (if started)
+- PostgreSQL database on your configured host/port
+
+This approach is useful if you already have PostgreSQL installed or want to run services separately.
 
 ## 🧪 Running Tests
 
@@ -145,25 +173,12 @@ npm run format:check
 
 ---
 
-## 💡 Useful URLs
-
-- UI:
-  - `http://localhost:3000/recepti`
-  - `http://localhost:3000/recepti/:slug`
-  - `http://localhost:3000/recepti/admin`
-- API:
-  - `GET http://localhost:3000/api/recipes`
-  - `GET http://localhost:3000/api/recipes/:slug`
-- Fake CDN:
-  - `GET http://localhost:3000/cdn/*`
-
----
-
 ## 📁 Project Structure
 
 ```text
 docker-compose.yml
 README.md
+package.json
 prisma/
   schema.prisma
   seed.ts
@@ -173,17 +188,70 @@ public/
   patterns/
 src/
   app/
+    layout.tsx
+    page.tsx
+    api/
+      recipes/
+      uploads/
+      ...
+    recepti/
+      [slug]/
+      admin/
+      ...
   components/
+    layout/
+    ...
   lib/
+    api.ts
+    cdn.ts
+    images.ts
+    formatters/
+    http/
+    server/
+    ...
   services/
+    recipes.client.ts
+    recipes.server.ts
+    uploads.client.ts
+    ...
   store/
+    store.ts
+    uiSlice.ts
+    ...
   test-utils/
+    next.ts
+    render.tsx
+    server-only.ts
+    store.ts
+    ...
   types/
+    nav.ts
+    recipes.ts
+    ...
   styles/
+    globals.css
+    ...
   shared/
+    strings.ts
+    ...
   stories/
+    recipes.fixtures.ts
+    ...
   __tests__/
-  ...
+    env.test.ts
+    app/
+    components/
+    lib/
+    services/
+    ...
 vitest.config.ts
 vitest.setup.ts
+eslint.config.mjs
+next.config.ts
+tsconfig.json
+postcss.config.mjs
+Dockerfile.frontend
+Dockerfile.storybook
+storybook-static/ (ignored)
+coverage/
 ```

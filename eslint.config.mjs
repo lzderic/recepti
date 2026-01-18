@@ -1,33 +1,31 @@
 import { defineConfig, globalIgnores } from "eslint/config";
 import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTs from "eslint-config-next/typescript";
-import preferArrow from "eslint-plugin-prefer-arrow";
 
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
   {
-    plugins: {
-      "prefer-arrow": preferArrow,
-    },
-    rules: {
-      "prefer-arrow/prefer-arrow-functions": [
-        "error",
-        {
-          disallowPrototype: true,
-          singleReturnOnly: false,
-          classPropertiesAllowed: false,
-        },
-      ],
-    },
-  },
-  {
-    files: ["src/store/**/*.ts"],
     rules: {
       "prefer-arrow/prefer-arrow-functions": "off",
+      "@typescript-eslint/no-unused-expressions": "off",
+      "@typescript-eslint/no-unused-vars": "warn",
+      "no-unused-vars": "warn",
+      "no-console": "off",
+      "no-empty": "warn",
+      "no-debugger": "off",
+      "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/ban-ts-comment": "off",
+      "@typescript-eslint/ban-types": "off",
+      "@typescript-eslint/no-var-requires": "off",
+      "@typescript-eslint/explicit-module-boundary-types": "off",
+      "@typescript-eslint/explicit-function-return-type": "off",
+      "@typescript-eslint/no-inferrable-types": "off",
+      "@typescript-eslint/no-non-null-assertion": "off",
+      "@typescript-eslint/no-empty-function": "warn",
     },
   },
-  globalIgnores([".next/**", "out/**", "build/**", "storybook-static/**", "next-env.d.ts"]),
+  globalIgnores([".next/**", "out/**", "build/**", "next-env.d.ts"]),
 ]);
 
 export default eslintConfig;

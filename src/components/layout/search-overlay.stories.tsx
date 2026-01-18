@@ -17,7 +17,7 @@ type Story = StoryObj<typeof meta>;
 export const Open: Story = {
   args: {
     open: true,
-    onClose: () => {},
+    onClose: () => undefined,
     anchorRect: new DOMRect(24, 24, 320, 36),
     snapLeft: null,
   },

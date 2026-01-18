@@ -7,6 +7,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { Recipe, RecipeListItem } from "@/types/recipes";
 
 const listRecipesMock = vi.fn<() => Promise<RecipeListItem[]>>();
+/* eslint-disable-next-line no-unused-vars */
 const getRecipeBySlugMock = vi.fn<(slug: string) => Promise<Recipe | null>>();
 
 vi.mock("@/lib/server/recipes/repo", () => ({

@@ -18,10 +18,10 @@ vi.mock("next/navigation", () => ({
   useRouter: () => ({ push: pushMock }),
 }));
 
-const listRecipesMock = vi.fn<(opts?: { signal?: AbortSignal }) => Promise<RecipeListItem[]>>();
+const listRecipesMock = vi.fn<() => Promise<RecipeListItem[]>>();
 
 vi.mock("@/services/recipes.client", () => ({
-  listRecipes: (opts?: { signal?: AbortSignal }) => listRecipesMock(opts),
+  listRecipes: () => listRecipesMock(),
 }));
 
 describe("SearchOverlay (ui)", () => {
