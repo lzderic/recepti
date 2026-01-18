@@ -27,6 +27,19 @@ const makeRecipe = (overrides?: Partial<Recipe>): Recipe => {
   };
 };
 
+vi.mock("@prisma/client", () => ({
+  Difficulty: { EASY: "EASY", MEDIUM: "MEDIUM", HARD: "HARD" },
+  DishGroup: {
+    MAIN: "MAIN",
+    DESSERT: "DESSERT",
+    BREAD: "BREAD",
+    APPETIZER: "APPETIZER",
+    SALAD: "SALAD",
+    SOUP: "SOUP",
+  },
+  CookingMethod: { BAKE: "BAKE", FRY: "FRY", BOIL: "BOIL", GRILL: "GRILL", NO_COOK: "NO_COOK" },
+}));
+
 vi.mock("@/lib/server/recipes/repo", () => {
   return {
     getRecipeBySlug: vi.fn(),

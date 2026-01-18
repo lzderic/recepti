@@ -226,7 +226,7 @@ const SearchOverlay = ({ open, onClose, anchorRect, snapLeft }: SearchOverlayPro
                       router.push(`/recepti/${r.slug}`);
                       onClose();
                     }}
-                    className="group overflow-hidden rounded-2xl border border-zinc-200 bg-white text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+                    className="group overflow-hidden rounded-2xl border border-zinc-200 bg-white text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-md cursor-pointer"
                   >
                     <div className="relative aspect-[16/11] w-full overflow-hidden bg-zinc-100">
                       <Image

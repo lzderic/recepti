@@ -2,7 +2,7 @@
  * @file Tests for recipe payload schemas.
  */
 
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { createRecipeSchema, updateRecipeSchema } from "@/lib/server/recipes/schemas";
 
 const validCreate = {
@@ -18,6 +18,20 @@ const validCreate = {
   steps: [{ text: "Sve pomiješaj." }],
   imageCdnPath: "/recipes/test/hero.jpg",
 };
+
+vi.mock("@prisma/client", () => ({
+  Difficulty: { EASY: "EASY", MEDIUM: "MEDIUM", HARD: "HARD" },
+  DishGroup: {
+    MAIN: "MAIN",
+    DESSERT: "DESSERT",
+    BREAD: "BREAD",
+    APPETIZER: "APPETIZER",
+    SALAD: "SALAD",
+    SOUP: "SOUP",
+  },
+  CookingMethod: { BAKE: "BAKE", FRY: "FRY", BOIL: "BOIL", GRILL: "GRILL", NO_COOK: "NO_COOK" },
+  default: {},
+}));
 
 describe("recipes schemas", () => {
   it("createRecipeSchema accepts a valid payload", () => {

@@ -14,53 +14,9 @@ To run this application locally, you need:
 - **Node.js** (version 20 or higher is recommended)
 - **npm** (Node.js package manager)
 
-Make sure Docker is running before starting the database. All other dependencies are installed via npm.
-
-## Storybook
-
-Storybook is included for interactive documentation and development of UI components. You can view and test all reusable components in isolation. The static build is generated in the `storybook-static` folder (which is ignored in git).
-
-To run Storybook in development mode:
-
-```sh
-npm run storybook
-```
-
-To build static Storybook files:
-
-```sh
-npm run storybook:build
-```
-
-The static files will be available in the `storybook-static` directory.
-
----
+Make sure Docker is running before starting the database.
 
 ## 🚀 Project Setup (Step-by-Step)
-
-### 1. Create Environment Files
-
-Create `.env` and `.env.local` in the project root with the following content:
-
-#### .env
-
-```env
-DATABASE_URL=postgresql://postgres:postgres@localhost:5433/recepti?schema=public
-```
-
-#### .env.local
-
-```env
-# Frontend
-# PostgreSQL (used by Next.js Route Handlers)
-DATABASE_URL=postgresql://postgres:postgres@localhost:5433/recepti?schema=public
-
-# CDN base (optional). If not set, the app will use /cdn/* on same origin.
-NEXT_PUBLIC_CDN_BASE_URL=/cdn
-
-# Assignment-compatible name (server-side). Keep NEXT_PUBLIC_* above for browser usage.
-CDN_BASE_URL=/cdn
-```
 
 ## 🏁 Quick Start with Docker Compose
 
@@ -92,28 +48,52 @@ All services will be up and running, ready for development and testing.
 
 If you prefer to run the application without Docker, follow these steps:
 
-1. Make sure you have a local PostgreSQL instance running and accessible. You can use the same connection string as in `.env` (see above), or adjust it to match your local setup.
+1. Create Environment Files
 
-2. Install all dependencies:
+Create `.env` and `.env.local` in the project root with the following content:
+
+#### .env
+
+```env
+DATABASE_URL=postgresql://postgres:postgres@localhost:5433/recepti?schema=public
+```
+
+#### .env.local
+
+```env
+# Frontend
+# PostgreSQL (used by Next.js Route Handlers)
+DATABASE_URL=postgresql://postgres:postgres@localhost:5433/recepti?schema=public
+
+# CDN base (optional). If not set, the app will use /cdn/* on same origin.
+NEXT_PUBLIC_CDN_BASE_URL=/cdn
+
+# Assignment-compatible name (server-side). Keep NEXT_PUBLIC_* above for browser usage.
+CDN_BASE_URL=/cdn
+```
+
+2. Make sure you have a local PostgreSQL instance running and accessible. You can use the same connection string as in `.env` (see above), or adjust it to match your local setup.
+
+3. Install all dependencies:
 
 ```sh
 npm install
 ```
 
-3. Run Prisma migrations and seed the database:
+4. Run Prisma migrations and seed the database:
 
 ```sh
-npx prisma migrate deploy
+npm run migrate
 npm run seed
 ```
 
-4. Start the Next.js development server:
+5. Start the Next.js development server:
 
 ```sh
 npm run dev
 ```
 
-5. (Optional) Start Storybook for component development:
+6. (Optional) Start Storybook for component development:
 
 ```sh
 npm run storybook
@@ -126,6 +106,26 @@ You will then have:
 - PostgreSQL database on your configured host/port
 
 This approach is useful if you already have PostgreSQL installed or want to run services separately.
+
+## Storybook
+
+Storybook is included for interactive documentation and development of UI components. You can view and test all reusable components in isolation. The static build is generated in the `storybook-static` folder (which is ignored in git).
+
+To run Storybook in development mode:
+
+```sh
+npm run storybook
+```
+
+To build static Storybook files:
+
+```sh
+npm run storybook:build
+```
+
+The static files will be available in the `storybook-static` directory.
+
+---
 
 ## 🧪 Running Tests
 

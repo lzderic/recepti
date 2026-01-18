@@ -63,7 +63,7 @@ const RecipeGridClient = ({ initialRecipes }: RecipeGridClientProps) => {
             <Link
               key={r.slug}
               href={`/recepti/${r.slug}`}
-              className="group overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+              className="group overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md cursor-pointer"
             >
               <div className="relative aspect-[16/11] w-full overflow-hidden bg-zinc-100">
                 <Image

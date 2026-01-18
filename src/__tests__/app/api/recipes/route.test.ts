@@ -6,6 +6,19 @@ import { describe, expect, it, vi } from "vitest";
 import type { NextRequest } from "next/server";
 import type { Recipe } from "@/types/recipes";
 
+vi.mock("@prisma/client", () => ({
+  Difficulty: { EASY: "EASY", MEDIUM: "MEDIUM", HARD: "HARD" },
+  DishGroup: {
+    MAIN: "MAIN",
+    DESSERT: "DESSERT",
+    BREAD: "BREAD",
+    APPETIZER: "APPETIZER",
+    SALAD: "SALAD",
+    SOUP: "SOUP",
+  },
+  CookingMethod: { BAKE: "BAKE", FRY: "FRY", BOIL: "BOIL", GRILL: "GRILL", NO_COOK: "NO_COOK" },
+}));
+
 vi.mock("@/lib/server/recipes/repo", () => {
   return {
     listRecipes: vi.fn(),
