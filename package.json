@@ -9,7 +9,7 @@
     "lint": "eslint",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "storybook": "storybook dev -p 6006",
+    "storybook": "storybook dev -p 6006 --no-open",
     "storybook:build": "storybook build",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
@@ -57,7 +57,7 @@
     "tailwindcss": "^4",
     "tsx": "^4.21.0",
     "typescript": "^5",
-    "vite": "^7.3.1",
+    "vite": "^6.4.1",
     "vitest": "^3.2.4"
   },
   "prisma": {

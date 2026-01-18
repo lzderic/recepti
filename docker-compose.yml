@@ -17,5 +17,31 @@ services:
       timeout: 5s
       retries: 20
 
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/recepti?schema=public
+      NEXT_PUBLIC_CDN_BASE_URL: /cdn
+      CDN_BASE_URL: /cdn
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+
+  storybook:
+    build:
+      context: .
+      dockerfile: Dockerfile.storybook
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "6006:6006"
+    restart: unless-stopped
+
 volumes:
   recepti_db:
